@@ -3,49 +3,29 @@
 COMMON_COPTS = [
     "-DSPIRV_CHECK_CONTEXT",
     "-DSPIRV_COLOR_TERMINAL",
-] + select({
-    "@platforms//os:windows": [],
-    "//conditions:default": [
-        "-DSPIRV_LINUX",
-        "-DSPIRV_TIMER_ENABLED",
-        "-fvisibility=hidden",
-        "-fno-exceptions",
-        "-fno-rtti",
-        "-Wall",
-        "-Wextra",
-        "-Wnon-virtual-dtor",
-        "-Wno-missing-field-initializers",
-        "-Werror",
-        "-Wno-long-long",
-        "-Wshadow",
-        "-Wundef",
-        "-Wconversion",
-        "-Wno-sign-conversion",
-    ],
-})
+    "-DSPIRV_LINUX",
+    "-DSPIRV_TIMER_ENABLED",
+    "-fvisibility=hidden",
+    "-fno-exceptions",
+    "-fno-rtti",
+    "-Wall",
+    "-Wextra",
+    "-Wnon-virtual-dtor",
+    "-Wno-missing-field-initializers",
+    "-Werror",
+    "-Wno-long-long",
+    "-Wshadow",
+    "-Wundef",
+    "-Wconversion",
+    "-Wno-sign-conversion",
+]
 
 TEST_COPTS = COMMON_COPTS + [
-] + select({
-    "@platforms//os:windows": [
-        # Disable C4503 "decorated name length exceeded" warning,
-        # triggered by some heavily templated types.
-        # We don't care much about that in test code.
-        # Important to do since we have warnings-as-errors.
-        "/wd4503",
-    ],
-    "//conditions:default": [
-        "-Wno-undef",
-        "-Wno-self-assign",
-        "-Wno-shadow",
-        "-Wno-unused-parameter",
-    ],
-})
-
-def incompatible_with(incompatible_constraints):
-    return select(_merge_dicts([{"//conditions:default": []}, {
-        constraint: ["@platforms//:incompatible"]
-        for constraint in incompatible_constraints
-    }]))
+    "-Wno-undef",
+    "-Wno-self-assign",
+    "-Wno-shadow",
+    "-Wno-unused-parameter",
+]
 
 DEBUGINFO_GRAMMAR_JSON_FILE = "@spirv_headers//:spirv_ext_inst_debuginfo_grammar_unified1"
 CLDEBUGINFO100_GRAMMAR_JSON_FILE = "@spirv_headers//:spirv_ext_inst_opencl_debuginfo_100_grammar_unified1"

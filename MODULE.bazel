@@ -1,7 +1,9 @@
-bazel_dep(name = "bazel_skylib", version = "1.5.0")
+module(name = "spirv_tools", version = "2024.2")
 
-bazel_dep(name = "googletest", dev_dependency = True)
-local_path_override(
-    module_name = "googletest",
-    path = "external/googletest",
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "spirv_headers", version = "vulkan-sdk-1.3.283.0")
+git_override(
+    module_name = "spirv_headers", 
+    remote = "https://github.com/XRerate/SPIRV-Headers",
+    commit = "3d2af15f773f1bcdb00355576823fb0b62173273"
 )
